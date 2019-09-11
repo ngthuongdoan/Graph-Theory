@@ -55,23 +55,18 @@ List neighbors(Graph *G, int x)
 {
     List L;
     make_null(&L);
-    int e, y;
+    int y;
     for (y = 1; y <= G->n; y++)
     {
-        if (x == y)
-            continue;
-        for (e = 1; e <= G->n; e++)
-            if (G->A[x][e] > 0 && G->A[y][e] > 0)
-            {
-                push_back(&L, y);
-                break;
-            }
+        if (adjacent(G, x, y))
+            push_back(&L, y);
     }
     return L;
 }
 
-void inDS(Graph *G){
-    int i,j;
+void inDS(Graph *G)
+{
+    int i, j;
     for (i = 0; i < G->n; i++)
     {
         for (j = 0; j < G->n; j++)
@@ -80,23 +75,22 @@ void inDS(Graph *G){
         }
         printf("\n");
     }
-
 }
-// int main(int argc, char const *argv[])
-// {
-//     Graph G;
-//     int n = 4, v;
-//     init_graph(&G, n);
-//     add_edge(&G, 1, 2);
-//     add_edge(&G, 1, 3);
-//     add_edge(&G, 1, 3);
-//     add_edge(&G, 3, 4);
-//     add_edge(&G, 1, 4);
+int main(int argc, char const *argv[])
+{
+    Graph G;
+    int n = 4, v;
+    init_graph(&G, n);
+    add_edge(&G, 1, 2);
+    add_edge(&G, 1, 3);
+    add_edge(&G, 1, 3);
+    add_edge(&G, 3, 4);
+    add_edge(&G, 1, 4);
 
-//     for (v = 1; v <= n; v++)
-//     {
-//         printf("deg(%d) = %d\n", v, degree(&G, v));
-//     }
-
-//     return 0;
-// }
+    for (v = 1; v <= n; v++)
+    {
+        printf("deg(%d) = %d\n", v, degree(&G, v));
+    }
+    
+    return 0;
+}

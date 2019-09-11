@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #define MaxLength 100
-typedef char ElementType;
+typedef int ElementType;
 //typedef float ElementType;
 typedef struct
 {
@@ -16,9 +16,9 @@ void MakeNull_Stack(Stack *S)
     S->Top_idx = MaxLength;
 }
 /*=== Kiem tra rong ===*/
-int Empty_Stack(Stack S)
+int Empty_Stack(Stack *S)
 {
-    return (S.Top_idx == MaxLength);
+    return (S->Top_idx == MaxLength);
 }
 /*=== Kiem tra day ===*/
 int Full_Stack(Stack S)
@@ -28,12 +28,12 @@ int Full_Stack(Stack S)
 /*=== Lay 1 phan tu ra khoi ngan xep ===*/
 ElementType Top(Stack S)
 {
-    if (!Empty_Stack(S))
+    if (!Empty_Stack(&S))
         return S.Elements[S.Top_idx];
     else
     {
         printf("\nLoi ! Stack rong");
-        return NULL;
+        return 0;
     }
 }
 /*=== Them phan tu vao stack ===*/
@@ -51,7 +51,7 @@ void Push(ElementType X, Stack *S)
 /*=== Xoa phan tu khoi ngan xep ===*/
 void Pop(Stack *S)
 {
-    if (Empty_Stack(*S))
+    if (Empty_Stack(S))
         printf("\nLoi ! Stack rong");
     else
     {

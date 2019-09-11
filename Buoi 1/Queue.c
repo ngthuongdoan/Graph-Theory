@@ -67,3 +67,17 @@ void EnQueue(ElementType X, Queue *Q)
     else
         printf("Loi: Hang day!");
 }
+
+void push(Queue *Q, int x)
+{
+    Q->Rear++;
+    Q->Elements[Q->Rear] = x;
+}
+int top(Queue *Q)
+{
+    return Q->Elements[Q->Front];
+}
+void pop(Queue *Q)
+{
+    Q->Front++;
+}
