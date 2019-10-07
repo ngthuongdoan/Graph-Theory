@@ -27,3 +27,13 @@ int count_list(List *L)
 {
     return L->size;
 }
+
+void copy_list(List *L1, List *L2)
+{
+    make_null(L2);
+    int i;
+    for (i = 1; i <= L1->size; i++)
+    {
+        push_back(L2, element_at(L1, i));
+    }
+}
