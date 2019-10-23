@@ -99,11 +99,12 @@ int main(int argc, char const *argv[])
         scanf("%d%d%d", &u, &v, &w);
         add_edge(&G, u, v, w);
     }
-    // printMatrix(G);
-    // arrange(&G);
-    // printf("\n");
-    // printMatrix(G);
-    // printf("\n");
+     printMatrix(G);
+     arrange(&G);
+     printf("\n");
+     printMatrix(G);
+     printf("\n");
+//    Kruskal(&G,&T);
 
     return 0;
 }
