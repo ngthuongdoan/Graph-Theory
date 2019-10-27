@@ -64,7 +64,6 @@ int findRoot(int x)
 int Kruskal(Graph *G, Graph *T)
 {
     int e, u;
-    init_graph(T, G->n);
     int i, j;
     for (i = 1; i <= (G->m - 1); i++)
         for (j = i + 1; j <= G->m; j++)
@@ -102,6 +101,7 @@ int main(int argc, char const *argv[])
     int n, m, u, v, w;
     scanf("%d%d", &n, &m);
     init_graph(&G, n);
+    init_graph(&T, n);
     int i;
     for (i = 1; i <= m; i++)
     {
@@ -119,3 +119,4 @@ int main(int argc, char const *argv[])
     printf("1");
     return 0;
 }
+
