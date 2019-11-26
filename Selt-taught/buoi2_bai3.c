@@ -105,7 +105,6 @@ int bfs(Graph *G)
     int i, count = 0;
     for (i = 1; i <= G->n; i++)
         mark[i] = 0;
-
     mark[1] = 1;
     enqueue(&q, 1);
     while (!empty(&q))

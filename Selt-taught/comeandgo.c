@@ -48,9 +48,11 @@ void init_graph(Graph *G, int n)
             G->A[i][j] = 0;
 }
 
-void add_edge(Graph *G, int x, int y)
+void add_edge(Graph *G, int x, int y, int t)
 {
     G->A[x][y] = 1;
+    if (t == 2)
+        G->A[y][x] = 1;
 }
 
 List neighbor(Graph *G, int x)
@@ -155,7 +157,7 @@ void strongconnect(Graph *G, int x)
         else if (on_stack[y])
             min_num[x] = min(min_num[x], num[y]);
     }
-    // printf("min_num[%d] = %d\n", x, min_num[x]);
+
     if (num[x] == min_num[x])
     {
         count++;
@@ -167,7 +169,6 @@ void strongconnect(Graph *G, int x)
             on_stack[w] = 0;
         } while (w != x);
     }
-    // return count;
 }
 
 int main(int argc, char const *argv[])
@@ -175,14 +176,14 @@ int main(int argc, char const *argv[])
     Graph G;
     freopen("dt.txt", "r", stdin); //Khi nộp bài nhớ bỏ dòng này.
 
-    int n, m, u, v, e;
+    int n, m, u, v, e, t;
     scanf("%d%d", &n, &m);
     init_graph(&G, n);
     //Them cung
     for (e = 1; e <= m; e++)
     {
-        scanf("%d%d", &u, &v);
-        add_edge(&G, u, v);
+        scanf("%d%d%d", &u, &v, &t);
+        add_edge(&G, u, v, t);
     }
     int i;
     //Khoi tao num, on_stack
@@ -194,19 +195,19 @@ int main(int argc, char const *argv[])
     idx = 1;
     makenull_stack(&S);
     int j;
+    for (j = 1; j <= n; j++)
+    {
+        if (num[j] == -1)
+            strongconnect(&G, j);
+    }
 
-    strongconnect(&G, 1);
-    //Xet lien thong manh
     if (count == 1)
     {
-        printf("strong connected");
+        printf("OKIE");
     }
     else
     {
-        printf("unconnected");
+        printf("NO");
     }
-
-    //Dem so BPLTM
-    printf("%d", count);
     return 0;
 }
