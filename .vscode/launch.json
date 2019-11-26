@@ -9,7 +9,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/a.exe",
+            "program": "${fileDirname}/DuyetDoThi.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

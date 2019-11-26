@@ -21,8 +21,8 @@ void init_graph(Graph *G, int n)
 
 void add_edge(Graph *G, int x, int y)
 {
-    G->edges->x = x;
-    G->edges->y = y;
+    G->edges[G->m].x = x;
+    G->edges[G->m].y = y;
     G->m += 1;
 }
 
