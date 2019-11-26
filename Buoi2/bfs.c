@@ -1,4 +1,4 @@
-#include "MaTranDinhDinh.c"
+#include "../Buoi1/MaTranDinhDinh.c"
 #define MAXVERTEXES 100
 #define MAX_ELEMENTS 100
 

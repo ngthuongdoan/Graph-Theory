@@ -1,4 +1,4 @@
-#include "MaTranDinhDinh.c"
+#include "../Buoi1/MaTranDinhDinh.c"
 #define MAXLENGTH 100
 #define MAXVERTEXES 100
 //-------Stack---------//
