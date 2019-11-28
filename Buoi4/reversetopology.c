@@ -72,25 +72,28 @@ void ranking(Graph *G)
     for (x = 1; x <= G->n; x++)
         for (u = 1; u <= G->n; u++)
             if (G->A[x][u] != 0)
-                d[u]++;
-
+                d[x]++;
+    // for (x = 1; x <= G->n; x++)
+    //     printf("%d\n",d[x]);
+    // printf("\n");
     List S1, S2;
     makenullList(&S1);
 
     for (u = 1; u <= G->n; u++)
         if (d[u] == 0)
             pushback(&S1, u);
-    int k = 0, i;
+
+    int k = 1, i;
     while (S1.size > 0)
     {
         makenullList(&S2);
-        for (i = 1; i <= S1.size; i++)
+        for (i = S1.size; i >= 1; i--)
         {
             int u = element_at(&S1, i);
             rank[u] = k;
             int v;
             for (v = 1; v <= G->n; v++)
-                if (G->A[u][v] != 0)
+                if (G->A[v][u] != 0)
                 {
                     d[v]--;
                     if (d[v] == 0)
