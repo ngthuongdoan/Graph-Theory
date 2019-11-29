@@ -58,6 +58,8 @@ void add_edge(Graph *G, int x, int y)
 
 //-----------------------EndGraph-----------------------------//
 
+#define INFINITY 9999999
+int d[MAXVERTICLES];
 int rank[MAXVERTICLES];
 int k = 0;
 void ranking(Graph *G)
@@ -114,27 +116,89 @@ void topo_sort(Graph *G, List *L)
                 pushback(L, j);
 }
 
-int main(int argc, char const *argv[])
+int max(int x, int y)
 {
-    freopen("dt.txt", "r", stdin); //Khi nộp bài nhớ bỏ dòng này.
-    Graph G;
-    int n, m, u, v, e;
-    scanf("%d%d", &n, &m);
-    init_graph(&G, n);
+    return (x >= y) ? x : y;
+}
 
-    for (e = 0; e < m; e++)
+int min(int x, int y)
+{
+    return (x <= y) ? x : y;
+}
+
+int main()
+{
+    Graph G;
+    int n, u, x, v, j, z, y;
+    //Doc do thi
+    freopen("dt.txt", "r", stdin);
+    scanf("%d", &n);
+    init_graph(&G, n + 2);
+    d[n + 1] = 0;
+
+    for (u = 1; u <= n; u++)
     {
-        scanf("%d%d", &u, &v);
-        add_edge(&G, u, v);
+        scanf("%d", &d[u]);
+        do
+        {
+            scanf("%d", &x);
+            if (x > 0)
+                add_edge(&G, x, u);
+        } while (x > 0);
     }
-    int i;
+    // scanf("%d%d", &z, &y);
+
+    for (u = 1; u <= n; u++)
+    {
+        int deg_neg = 0;
+        for (x = 1; x <= n; x++)
+            if (G.A[x][u] > 0)
+                deg_neg++;
+        if (deg_neg == 0)
+            add_edge(&G, n + 1, u);
+    }
+
+    for (u = 1; u <= n; u++)
+    {
+        int deg_pos = 0;
+        for (x = 1; x <= n; x++)
+            if (G.A[u][x] > 0)
+                deg_pos++;
+        if (deg_pos == 0)
+            add_edge(&G, u, n + 2);
+    }
     List L;
+    int i;
     topo_sort(&G, &L);
-    for (i = 1; i <= n; i++)
-        printf("%d\n", rank[i]);
+
+    int t[MAXVERTICLES];
+    t[n + 1] = 0;
+
+    for (i = 2; i <= L.size; i++)
+    {
+        int u = element_at(&L, i);
+        t[u] = -1;
+        for (x = 1; x <= G.n; x++)
+            if (G.A[x][u] > 0)
+                t[u] = max(t[u], t[x] + d[x]);
+    }
+
+    int T[MAXVERTICLES];
+    T[n + 2] = t[n + 2];
+    for (i = L.size - 1; i >= 1; i--)
+    {
+        int u = element_at(&L, i);
+        T[u] = INFINITY;
+        for (x = 1; x <= G.n; x++)
+            if (G.A[u][x] > 0)
+                T[u] = min(T[u], T[x] - d[u]);
+    }
 
     for (i = 1; i <= L.size; i++)
         printf("%d ", element_at(&L, i));
+    printf("\n");
 
-    return 0;
+    for (i = 1; i <= n+2; i++)
+        if (t[i] == T[i])
+            printf("%d\n", i);
 }
