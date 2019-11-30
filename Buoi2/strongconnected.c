@@ -155,7 +155,6 @@ void strongconnect(Graph *G, int x)
         else if (on_stack[y])
             min_num[x] = min(min_num[x], num[y]);
     }
-    // printf("min_num[%d] = %d\n", x, min_num[x]);
     if (num[x] == min_num[x])
     {
         count++;
@@ -167,7 +166,6 @@ void strongconnect(Graph *G, int x)
             on_stack[w] = 0;
         } while (w != x);
     }
-    // return count;
 }
 
 int main(int argc, char const *argv[])
