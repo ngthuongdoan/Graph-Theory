@@ -16,13 +16,13 @@ void makenull_queue(Queue *Q)
     Q->front = 0;
     Q->rear = -1;
 }
-void enqueue(Queue *Q, int x)
+void push(Queue *Q, int x)
 {
     Q->rear++;
     Q->A[Q->rear] = x;
 }
 
-void dequeue(Queue *Q)
+void pop(Queue *Q)
 {
     Q->front++;
 }
@@ -38,32 +38,68 @@ int top(Queue *Q)
 }
 
 //List Structure
+// typedef struct
+// {
+//     int idx;
+//     int A[MAXELEMENT];
+// } List;
+
+// void makenull_list(List *l)
+// {
+//     l->idx = 0;
+// }
+
+// void addlist(List *l, int x)
+// {
+//     l->A[l->idx] = x;
+//     l->idx++;
+// }
+
+// int elementAt(List *l, int idx)
+// {
+//     return l->A[idx - 1];
+// }
+
+// int countlist(List *l)
+// {
+//     return l->idx;
+// }
+typedef int ElementType;
 typedef struct
 {
-    int idx;
-    int A[MAXELEMENT];
+    ElementType data[MAXN];
+    int size;
 } List;
 
-void makenull_list(List *l)
+void makenullList(List *L)
 {
-    l->idx = 0;
+    L->size = 0;
 }
 
-void addlist(List *l, int x)
+void pushback(List *L, ElementType x)
 {
-    l->A[l->idx] = x;
-    l->idx++;
+    L->data[L->size] = x;
+    L->size++;
 }
 
-int elementAt(List *l, int idx)
+ElementType element_at(List L, int i)
 {
-    return l->A[idx - 1];
+    return L.data[i - 1];
 }
 
-int countlist(List *l)
+int countlist(List L)
 {
-    return l->idx;
+    return L.size;
 }
+
+void copylist(List *L1, List *L2)
+{
+    List temp = *L2;
+    *L2 = *L1;
+    *L1 = temp;
+}
+
+
 //Graph Structure
 typedef struct
 {
@@ -90,13 +126,13 @@ List neighbor(Graph *G, int x)
 {
     int i;
     List list;
-    makenull_list(&list);
+    makenullList(&list);
     for (i = 1; i <= G->n; i++)
         if (G->A[x][i] != 0)
-            addlist(&list, i);
+            pushback(&list, i);
     return list;
 }
-//BFS
+
 void bfs(Graph *G)
 {
     Queue q;
@@ -105,31 +141,61 @@ void bfs(Graph *G)
     int i;
     for (i = 1; i <= G->n; i++)
         mark[i] = 0;
-    // enqueue(&q, 1);
-    // printf("1\n");
-    // mark[1] = 1;
     for (i = 1; i <= G->n; i++)
         if (mark[i] == 0)
         {
-            mark[i]=1;
-            enqueue(&q,i);
-            printf("%d\n",i);
+            mark[i] = 1;
+            push(&q, i);
+            printf("%d\n", i);
             while (!empty(&q))
             {
                 int i;
                 int u = top(&q);
-                dequeue(&q);
+                pop(&q);
                 List list = neighbor(G, u);
-                for (i = 1; i <= list.idx; i++)
-                    if (mark[elementAt(&list, i)] == 0)
+                for (i = 1; i <= list.size; i++)
+                    if (mark[element_at(list, i)] == 0)
                     {
-                        printf("%d\n", elementAt(&list, i));
-                        mark[elementAt(&list, i)] = 1;
-                        enqueue(&q, elementAt(&list, i));
+                        printf("%d\n",
+                               element_at(list, i));
+                        mark[element_at(list, i)] = 1;
+                        push(&q, element_at(list, i));
                     }
             }
         }
 }
+
+//BFS
+// void bfs(Graph *G)
+// {
+//     Queue q;
+//     makenull_queue(&q);
+//     int mark[MAXN];
+//     int i;
+//     for (i = 1; i <= G->n; i++)
+//         mark[i] = 0;
+//     for (i = 1; i <= G->n; i++)
+//         if (mark[i] == 0)
+//         {
+//             mark[i]=1;
+//             enqueue(&q,i);
+//             printf("%d\n",i);
+//             while (!empty(&q))
+//             {
+//                 int i;
+//                 int u = top(&q);
+//                 dequeue(&q);
+//                 List list = neighbor(G, u);
+//                 for (i = 1; i <= list.idx; i++)
+//                     if (mark[elementAt(&list, i)] == 0)
+//                     {
+//                         printf("%d\n", elementAt(&list, i));
+//                         mark[elementAt(&list, i)] = 1;
+//                         enqueue(&q, elementAt(&list, i));
+//                     }
+//             }
+//         }
+// }
 
 int main(int argc, char const *argv[])
 {
