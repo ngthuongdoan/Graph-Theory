@@ -65,13 +65,11 @@ int Kruskal(Graph *G, Graph *T)
         int w = G->edges[e].w;
         int root_u = findRoot(u);
         int root_v = findRoot(v);
-        // printf("%d %d %d\n", u, v, w);
         if (root_u != root_v)
         {
             add_edge(T, u, v, w);
             parent[root_v] = root_u;
             sum += w;
-            // printf("%d\n",sum);
         }
     }
     return sum;

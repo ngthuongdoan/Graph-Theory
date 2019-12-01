@@ -103,7 +103,7 @@ int FordFullkerson(Graph *G, int s, int t)
                     push(&Q, v);
                 }
 
-                if (labels[v].dir == 0 && G->C[x][v] != NO_EDGE && G->F[x][v] > 0)
+                if (labels[v].dir == 0 && G->C[v][x] != NO_EDGE && G->F[v][x] > 0)
                 {
                     labels[v].dir = -1;
                     labels[v].pre = x;
@@ -117,8 +117,6 @@ int FordFullkerson(Graph *G, int s, int t)
                 break;
             }
         }
-        
-
         if (found == 1)
         {
             int x = t;
@@ -138,7 +136,6 @@ int FordFullkerson(Graph *G, int s, int t)
                 }
                 x = u;
             }
-            // break;
         }
         else
         {
@@ -163,6 +160,20 @@ int main(int argc, char const *argv[])
     }
 
     int flow = FordFullkerson(&G, 1, n);
-    printf("%d", flow);
+    printf("Max flow: %d\n", flow);
+
+    printf("X0:");
+    for (u = 1; u <= n; u++)
+    {
+        if (labels[u].dir != 0)
+            printf(" %d", u);
+    }
+
+    printf("\nY0:");
+    for (u = 1; u <= n; u++)
+    {
+        if (labels[u].dir == 0)
+            printf(" %d", u);
+    }
     return 0;
 }
